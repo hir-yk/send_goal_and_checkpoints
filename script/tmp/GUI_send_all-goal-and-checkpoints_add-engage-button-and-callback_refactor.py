@@ -112,9 +112,10 @@ class MainWindow(QWidget):
         self.layout().addWidget(self.csv_files_listwidget)
 
     def load_csv_files(self):
-        """Return a list of csv file names in the current directory."""
+        """Return a list of csv file names in the current directory, sorted in ascending order."""
         csv_files = glob.glob("*.csv")
-        return [os.path.basename(file) for file in csv_files]
+        basenames = [os.path.basename(file) for file in csv_files]
+        return sorted(basenames)
 
     def add_no_file_label(self):
         """Create no file label and add it to layout."""
