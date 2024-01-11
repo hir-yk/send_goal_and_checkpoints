@@ -95,18 +95,16 @@ class MainWindow(QWidget):
             self.node = ROS2TopicPublisher(csv_files[0])
 
     def publish_csv(self):
-        if self.node:
+        if self.csv_publisher_node:
             current_index = self.csv_files_listwidget.currentRow()
             file_name = self.csv_files[current_index]
-            if self.node.csv_file != file_name:
-                self.node = ROS2TopicPublisher(file_name)
+            if self.csv_publisher_node.csv_file != file_name:
+                self.csv_publisher_node = ROS2TopicPublisher(file_name)
 
             # Loop through all poses in csv_data and publish them
-            for row in self.node.csv_data:
-                self.node.get_logger().info(f"Publishing pose: type={row['type']}, id={row['id']}, comment={row['comment']}")
-                self.node.publish_pose(row)
-
-                # Wait for 1 second after publishing
+            for row in self.csv_publisher_node.csv_data:
+                self.csv_publisher_node.get_logger().info(f"Publishing pose: type={row['type']}, id={row['id']}, comment={row['comment']}")
+                self.csv_publisher_node.publish_pose(row)
                 time.sleep(1)
 
 
